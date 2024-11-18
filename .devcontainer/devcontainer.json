@@ -1,0 +1,25 @@
+{
+  "name": "Industrial Stack",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "remix",
+  "workspaceFolder": "/workspace",
+  "features": {
+      "ghcr.io/devcontainers/features/node:1": {
+        "version": "20"
+      },
+      "ghcr.io/devcontainers/features/docker-in-docker:2": {}
+  },
+  "customizations": {
+      "vscode": {
+          "extensions": [
+              "dbaeumer.vscode-eslint",
+              "ParthR2031.colorful-comments",
+              "esbenp.prettier-vscode"
+          ]
+      }
+  },
+  "mounts": [
+    "source=${localEnv:HOME}/.local/share/atuin,target=/home/node/.local/share/atuin,type=bind,consistency=cached"
+  ],
+  "postCreateCommand": "bash .devcontainer/install-cli-tools.sh"
+}
