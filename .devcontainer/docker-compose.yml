@@ -1,0 +1,23 @@
+services:
+  remix:
+    image: mcr.microsoft.com/devcontainers/javascript-node:20
+    volumes:
+      - ../:/workspace:cached
+    command: sleep infinity
+    ports:
+      - 24678:24678
+  postgres:
+    image: pgvector/pgvector:pg17
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USER: industrial
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: industrial
+      PGDATA: /data/postgres
+    volumes:
+      - pg-data:/data/postgres
+
+volumes:
+  pg-data:
+    driver: local
