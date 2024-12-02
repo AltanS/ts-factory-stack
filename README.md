@@ -1,4 +1,4 @@
-# remix-industrial-stack
+# remix-factory-stack
 
 - PNPM monorepo
 - Devcontainer ready

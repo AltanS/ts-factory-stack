@@ -1,5 +1,5 @@
 {
-  "name": "industrial-stack",
+  "name": "factory-stack",
   "private": true,
   "scripts": {
     "format": "prettier --write \"**/*.{ts,tsx,md}\""
