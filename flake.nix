@@ -14,11 +14,11 @@
         inherit system;
       };
     in pkgs.mkShell {
-      # create an environment with nodejs_20, pnpm, and yarn
+      # create an environment with nodejs_22, pnpm, and yarn
       packages = with pkgs; [
-        nodejs_20
+        nodejs_22
         nodePackages.pnpm
-        (yarn.override { nodejs = nodejs_20; })
+        (yarn.override { nodejs = nodejs_22; })
       ];
 
       shellHook = ''
