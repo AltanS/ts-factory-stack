@@ -6,11 +6,18 @@
     "build": "cross-env NODE_ENV=production react-router build",
     "dev": "react-router dev",
     "start": "cross-env NODE_ENV=production react-router-serve ./build/server/index.js",
-    "typecheck": "react-router typegen && tsc"
+    "typecheck": "react-router typegen && tsc",
+    "drizzle:generate": "drizzle-kit generate",
+    "drizzle:migrate": "drizzle-kit migrate",
+    "drizzle:push": "drizzle-kit push",
+    "drizzle:studio": "drizzle-kit studio",
+    "drizzle:update": "drizzle-kit generate && drizzle-kit migrate",
+    "drizzle:seed": "tsx drizzle/seed.ts"
   },
   "dependencies": {
     "@react-router/node": "^7.2.0",
     "@react-router/serve": "^7.2.0",
+    "bcryptjs": "^3.0.2",
     "dotenv": "^16.4.7",
     "drizzle-kit": "^0.30.4",
     "drizzle-orm": "^0.39.3",
@@ -18,7 +25,8 @@
     "pg": "^8.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.2.0"
+    "react-router": "^7.2.0",
+    "tsx": "^4.19.3"
   },
   "devDependencies": {
     "@react-router/dev": "^7.2.0",

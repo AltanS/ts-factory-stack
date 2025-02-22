@@ -1,5 +1,5 @@
 import type { RoleType } from '#drizzle/types/enums';
-import { 
+import {
   pgTable,
   serial,
   text,
@@ -10,7 +10,7 @@ import {
   primaryKey,
   vector,
   index,
-  boolean
+  boolean,
 } from 'drizzle-orm/pg-core';
 import { relations, type InferInsertModel, type InferSelectModel } from 'drizzle-orm';
 
@@ -23,12 +23,14 @@ export const users = pgTable('users', {
   password: text('password').notNull(),
   role: text('role').$type<RoleType>().default('editor').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()).notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export type InsertUser = InferInsertModel<typeof users>;
 export type SelectUser = InferSelectModel<typeof users>;
-
 
 export const articles = pgTable('articles', {
   id: serial('id').primaryKey(),
@@ -36,9 +38,11 @@ export const articles = pgTable('articles', {
   slug: text('slug').notNull(),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()).notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
-
 
 export type InsertArticle = InferInsertModel<typeof articles>;
 export type SelectArticle = InferSelectModel<typeof articles>;
@@ -51,14 +55,14 @@ export const articlesRelations = relations(articles, ({ many }) => ({
 export const categories = pgTable('categories', {
   id: serial('id').primaryKey(),
   name: text('name').notNull(),
-}); 
+});
 
 export type InsertCategory = InferInsertModel<typeof categories>;
 export type SelectCategory = InferSelectModel<typeof categories>;
 
 export const categoriesRelations = relations(categories, ({ many }) => ({
   articles: many(articles),
-}));  
+}));
 
 export const pages = pgTable('pages', {
   id: serial('id').primaryKey(),
@@ -66,7 +70,10 @@ export const pages = pgTable('pages', {
   slug: text('slug').notNull(),
   content: text('content').notNull(),
   createdAt: timestamp('created_at').defaultNow().notNull(),
-  updatedAt: timestamp('updated_at').defaultNow().$onUpdate(() => new Date()).notNull(),
+  updatedAt: timestamp('updated_at')
+    .defaultNow()
+    .$onUpdate(() => new Date())
+    .notNull(),
 });
 
 export type InsertPage = InferInsertModel<typeof pages>;
