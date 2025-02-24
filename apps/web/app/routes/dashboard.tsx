@@ -1,11 +1,7 @@
-import type { SelectPage } from '#drizzle/schema';
 import type { MetaFunction } from 'react-router';
-import { Link, useLoaderData } from 'react-router';
-import { getPages } from '#app/models/pages.server';
-import { Button } from '#app/components/ui/button';
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Pages Dashboard' }, { name: 'description', content: 'Manage your pages' }];
+  return [{ title: 'Dashboard' }, { name: 'description', content: 'Dashboard' }];
 };
 
 export const handle = {
