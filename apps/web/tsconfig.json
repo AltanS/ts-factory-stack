@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "#app/*": ["./app/*"],
-      "#drizzle/*": ["./drizzle/*"]
+      "#drizzle/*": ["./drizzle/*"],
+      "#types/*": ["./types/*"]
     },
     "esModuleInterop": true,
     "verbatimModuleSyntax": true,
