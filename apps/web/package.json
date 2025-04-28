@@ -15,9 +15,9 @@
     "drizzle:seed": "tsx drizzle/seed.ts"
   },
   "dependencies": {
-    "@react-router/express": "^7.2.0",
-    "@react-router/node": "^7.2.0",
-    "@react-router/serve": "^7.2.0",
+    "@react-router/express": "^7.5.2",
+    "@react-router/node": "^7.5.2",
+    "@react-router/serve": "^7.5.2",
     "bcryptjs": "^3.0.2",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
@@ -32,7 +32,7 @@
     "pg": "^8.13.1",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
-    "react-router": "^7.2.0",
+    "react-router": "^7.5.2",
     "remix-auth": "^4.1.0",
     "remix-auth-form": "^3.0.0",
     "remix-toast": "^2.0.0",
@@ -43,7 +43,7 @@
     "tsx": "^4.19.3"
   },
   "devDependencies": {
-    "@react-router/dev": "^7.2.0",
+    "@react-router/dev": "^7.5.2",
     "@types/compression": "^1.7.5",
     "@types/express": "^5.0.0",
     "@types/morgan": "^1.9.9",
