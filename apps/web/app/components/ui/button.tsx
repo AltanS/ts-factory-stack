@@ -1,6 +1,6 @@
 import type { ButtonHTMLAttributes } from 'react';
 import { forwardRef } from 'react';
-import { cn } from '#app/utils/shadcn';
+import { cn } from '#app/lib/utils';
 
 interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'default' | 'outline' | 'ghost';
