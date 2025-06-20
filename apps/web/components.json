@@ -7,14 +7,14 @@
     "config": "tailwind.config.ts",
     "css": "app/app.css",
     "baseColor": "zinc",
-    "cssVariables": false,
+    "cssVariables": true,
     "prefix": ""
   },
   "aliases": {
     "components": "#app/components",
-    "utils": "#app/utils/shadcn",
+    "utils": "#app/lib/utils",
     "ui": "#app/components/ui",
-    "lib": "#app/utils",
+    "lib": "#app/lib",
     "hooks": "#app/hooks"
   },
   "iconLibrary": "lucide"

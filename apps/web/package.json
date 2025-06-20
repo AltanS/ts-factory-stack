@@ -15,6 +15,7 @@
     "drizzle:seed": "tsx drizzle/seed.ts"
   },
   "dependencies": {
+    "@radix-ui/react-navigation-menu": "^1.2.13",
     "@react-router/express": "^7.6.1",
     "@react-router/node": "^7.6.1",
     "@react-router/serve": "^7.6.1",
