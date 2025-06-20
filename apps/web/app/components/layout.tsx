@@ -1,8 +1,8 @@
 import type { InsertUser as User } from '#drizzle/schema';
 import { useLoading } from '#app/hooks/useLoading';
 import { Form, Link, NavLink, useNavigation, useParams } from 'react-router';
-import { userIsAdmin } from '#app/utils/permissions';
-import { cn } from '#app/utils/shadcn';
+import { userIsAdmin } from '#app/services/permissions';
+import { cn } from '#app/lib/utils';
 
 export default function Layout({
   user,
