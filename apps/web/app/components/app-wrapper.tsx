@@ -4,7 +4,7 @@ import { Form, Link, NavLink, useNavigation, useParams } from 'react-router';
 import { userIsAdmin } from '#app/services/permissions';
 import { cn } from '#app/lib/utils';
 
-export default function Layout({
+export default function AppWrapper({
   user,
   title,
   backTo,
@@ -40,6 +40,9 @@ export default function Layout({
         </div>
       </div>
       <div className="bg-white grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+        <div className="bg-gray-800 text-white p-4">
+          <p className="">sidebar</p>
+        </div>
         <div>
           <main className="py-2">
             <div className="px-4 sm:px-6 lg:px-8">{children}</div>
