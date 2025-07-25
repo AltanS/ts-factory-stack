@@ -7,12 +7,15 @@ import {
   Scripts,
   ScrollRestoration,
   useLoaderData,
+  redirect,
 } from 'react-router';
-import { getToast } from 'remix-toast';
 import type { Route } from './+types/root';
+import { getToast } from '#app/utils/toast.server';
 import stylesheet from './app.css?url';
-import { useEffect } from 'react';
-import { Toaster, toast as notify } from 'sonner';
+import { combineHeaders } from '#app/utils/misc';
+import { Toaster } from '#app/components/ui/toaster';
+import { useToast } from '#app/hooks/useToast';
+import { LoadingProvider } from '#app/context/loading';
 
 export const links: Route.LinksFunction = () => [
   { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
@@ -28,43 +31,50 @@ export const links: Route.LinksFunction = () => [
   { rel: 'stylesheet', href: stylesheet },
 ];
 
-export const loader = async ({ request }: Route.LoaderArgs) => {
-  const { toast, headers } = await getToast(request);
-  // Important to pass in the headers so the toast is cleared properly
-  return data({ toast }, { headers });
-};
+export async function loader({ request }: Route.LoaderArgs) {
+  const { pathname, search } = new URL(request.url);
+  if (pathname.endsWith('/') && pathname !== '/') {
+    // Redirect to the same URL without a trailing slash
+    return redirect(`${pathname.slice(0, -1)}${search}`, 301);
+  }
+
+  const { toast, headers: toastHeaders } = await getToast(request);
+
+  return {
+    toast,
+    headers: combineHeaders(toastHeaders),
+  };
+}
 
 export function Layout({ children }: { children: React.ReactNode }) {
-  const { toast } = useLoaderData<typeof loader>();
-  // Hook to show the toasts
-  useEffect(() => {
-    if (toast?.type === 'error') {
-      notify.error(toast.message);
-    }
-    if (toast?.type === 'success') {
-      notify.success(toast.message);
-    }
-  }, [toast]);
   return (
     <html lang="en">
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <Meta />
         <Links />
       </head>
-      <body>
+      <body className="bg-zinc-50">
         {children}
-        <ScrollRestoration />
         <Scripts />
-        <Toaster />
       </body>
     </html>
   );
 }
 
 export default function App() {
-  return <Outlet />;
+  const data = useLoaderData<typeof loader>();
+  useToast(data?.toast);
+  return (
+    <LoadingProvider>
+      <Outlet />
+      <Toaster closeButton position="bottom-right" theme={'light'} />
+    </LoadingProvider>
+  );
 }
 
 export function ErrorBoundary({ error }: Route.ErrorBoundaryProps) {
