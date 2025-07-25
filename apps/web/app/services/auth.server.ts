@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs';
 import { Authenticator } from 'remix-auth';
 import { FormStrategy } from 'remix-auth-form';
 import { createUser, getUserByEmail } from '#app/models/users.server';
+
 // Create an instance of the authenticator, pass a generic with what
 // strategies will return and will store in the session
 export const authenticator = new Authenticator<User>();
@@ -13,10 +14,9 @@ authenticator.use(
   new FormStrategy(async ({ form }) => {
     const email = form.get('email');
     const password = form.get('password');
-
     // You can validate the inputs however you want
-    invariant(typeof email === 'string', 'username must be a string');
-    invariant(email.length > 0, 'username must not be empty');
+    invariant(typeof email === 'string', 'email must be a string');
+    invariant(email.length > 0, 'email must not be empty');
 
     invariant(typeof password === 'string', 'password must be a string');
     invariant(password.length > 0, 'password must not be empty');
@@ -30,12 +30,15 @@ authenticator.use(
 
 export async function login({ email, password }: { email: string; password: string }) {
   const user = await getUserByEmail(email);
-
-  invariant(user, `Incorrect Login`);
+  if (!user) {
+    throw new Error('Incorrect Login');
+  }
 
   const isValid = await bcrypt.compare(password, user.password);
 
-  invariant(isValid, `Incorrect Login`);
+  if (!isValid) {
+    throw new Error('Incorrect Login');
+  }
 
   return user;
 }
