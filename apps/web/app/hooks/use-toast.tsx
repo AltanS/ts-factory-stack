@@ -1,6 +1,6 @@
+import type { Toast } from '#app/utils/toast.server';
 import { useEffect, useRef } from 'react';
 import { toast as showToast } from 'sonner';
-import { type Toast } from '#app/utils/toast.server';
 import { useFetcher } from 'react-router';
 
 export function useToast(toast?: Toast | null) {

@@ -14,7 +14,7 @@ import { getToast } from '#app/utils/toast.server';
 import stylesheet from './app.css?url';
 import { combineHeaders } from '#app/utils/misc';
 import { Toaster } from '#app/components/ui/toaster';
-import { useToast } from '#app/hooks/useToast';
+import { useToast } from '#app/hooks/use-toast';
 import { LoadingProvider } from '#app/context/loading';
 
 export const links: Route.LinksFunction = () => [

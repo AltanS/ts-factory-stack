@@ -96,8 +96,7 @@ export default function Index() {
       <div>
         <div className="bg-zinc-100 max-w-md mx-auto p-4 rounded border shadow">
           <div className="mb-10 mx-auto pb-4 border-b">
-            <H1 variant="loginHeader">Delphi Login</H1>
-            <img src="/delphi.png" alt="Delphi" className="mx-auto size-40" />
+            <H1 variant="loginHeader">App Login</H1>
             {lastResult?.error && (
               <div className="text-red-500 text-center mt-4">{lastResult?.error['login-error']}</div>
             )}

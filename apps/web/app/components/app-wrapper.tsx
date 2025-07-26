@@ -1,8 +1,11 @@
 import type { InsertUser as User } from '#drizzle/schema';
-import { useLoading } from '#app/hooks/useLoading';
-import { Form, Link, NavLink, useNavigation, useParams } from 'react-router';
-import { userIsAdmin } from '#app/services/permissions';
+import { useLoading } from '#app/hooks/use-loading';
+import { Link, useNavigation } from 'react-router';
 import { cn } from '#app/lib/utils';
+import { ArrowLeft } from 'lucide-react';
+import { AppSidebar } from './app-sidebar';
+import { SidebarInset, SidebarProvider, SidebarTrigger } from './ui/sidebar';
+import { Separator } from './ui/separator';
 
 export default function AppWrapper({
   user,
@@ -15,14 +18,37 @@ export default function AppWrapper({
   backTo?: string;
   children: React.ReactNode;
 }) {
-  const isAdmin = userIsAdmin(user);
   const navigation = useNavigation();
   const { isLoading } = useLoading();
   const showLoadingBar = navigation.state === 'loading' || isLoading;
 
   return (
-    <div className="w-full h-full">
-      <div className="fixed top-0 left-0 w-full h-[4px] bg-transparent z-50">
+    <SidebarProvider>
+      <AppSidebar user={user} />
+      <SidebarInset>
+        <InnerContent title={title} backTo={backTo} showLoadingBar={showLoadingBar}>
+          {children}
+        </InnerContent>
+      </SidebarInset>
+    </SidebarProvider>
+  );
+}
+
+// Inner content component that can use useSidebar hook
+function InnerContent({
+  title,
+  backTo,
+  showLoadingBar,
+  children,
+}: {
+  title?: string;
+  backTo?: string;
+  showLoadingBar: boolean;
+  children: React.ReactNode;
+}) {
+  return (
+    <>
+      <div className="fixed top-0 left-0 right-0 h-[4px] bg-transparent z-50 pointer-events-none">
         <div
           className={cn(
             'absolute inset-0 overflow-hidden',
@@ -39,16 +65,27 @@ export default function AppWrapper({
           />
         </div>
       </div>
-      <div className="bg-white grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-        <div className="bg-gray-800 text-white p-4">
-          <p className="">sidebar</p>
+      <header className="flex h-16 shrink-0 items-center gap-2 border-b bg-background">
+        <div className="flex items-center gap-2 px-4 w-full">
+          <SidebarTrigger className="-ml-1 h-7 w-7" />
+          <Separator orientation="vertical" className="mr-2 h-4" />
+          <div className="flex flex-1 items-center justify-between">
+            <h1 className="text-xl font-semibold">{title || 'Dashboard'}</h1>
+          </div>
         </div>
-        <div>
-          <main className="py-2">
-            <div className="px-4 sm:px-6 lg:px-8">{children}</div>
-          </main>
+      </header>
+      {backTo && (
+        <div className="bg-muted/50 border-b px-4 py-2 sm:px-6 lg:px-8">
+          <Link
+            to={backTo}
+            className="inline-flex items-center text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <ArrowLeft className="w-4 h-4 mr-2" />
+            Back
+          </Link>
         </div>
-      </div>
-    </div>
+      )}
+      <div className="flex-1 p-4 md:p-6">{children}</div>
+    </>
   );
 }
