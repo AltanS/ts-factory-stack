@@ -1,5 +1,5 @@
 import * as React from "react"
-import { HomeIcon, Settings, type LucideIcon } from "lucide-react"
+import { HomeIcon, Settings, Users, type LucideIcon } from "lucide-react"
 import type { InsertUser as User } from '#drizzle/schema'
 import { NavUser } from "#app/components/nav-user"
 import {
@@ -14,10 +14,8 @@ import {
   SidebarMenuButton,
   SidebarGroupLabel,
 } from "#app/components/ui/sidebar"
-import { NavLink } from 'react-router'
+import { Link, useLocation } from 'react-router'
 import { userIsAdmin } from '#app/services/permissions'
-import { Button } from './ui/button'
-import { Sun, Moon } from 'lucide-react'
 
 type NavigationItem = {
   name: string;
@@ -28,6 +26,8 @@ type NavigationItem = {
 
 const navigationItems: NavigationItem[] = [
   { name: 'Dashboard', to: '/dashboard', icon: HomeIcon },
+  { name: 'Settings', to: '/settings', icon: Settings },
+  { name: 'Users', to: '/users', icon: Users, adminOnly: true },
 ];
 
 function Logo() {
@@ -38,52 +38,15 @@ function Logo() {
   );
 }
 
-function ThemeToggle() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
-  React.useEffect(() => {
-    // Check if dark mode is set
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
-  return (
-    <Button 
-      variant="ghost" 
-      size="sm" 
-      className="h-8 w-8 p-0 text-sidebar-foreground"
-      onClick={toggleTheme}
-    >
-      {theme === 'light' ? (
-        <Sun className="h-5 w-5" />
-      ) : (
-        <Moon className="h-5 w-5" />
-      )}
-      <span className="sr-only">Toggle theme</span>
-    </Button>
-  );
-}
-
 export function AppSidebar({ user }: { user: User } & React.ComponentProps<typeof Sidebar>) {
   const isAdmin = userIsAdmin(user);
+  const location = useLocation();
   
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="h-16 border-b">
-        <div className="flex h-full items-center justify-between px-2">
+        <div className="flex h-full items-center px-4">
           <Logo />
-          <ThemeToggle />
         </div>
       </SidebarHeader>
       <SidebarContent>
@@ -92,15 +55,14 @@ export function AppSidebar({ user }: { user: User } & React.ComponentProps<typeo
           <SidebarMenu>
             {navigationItems.map((item) => {
               if (item.adminOnly && !isAdmin) return null;
+              const isActive = location.pathname === item.to;
               return (
                 <SidebarMenuItem key={item.name}>
-                  <SidebarMenuButton asChild tooltip={item.name}>
-                    <NavLink
-                      to={item.to}
-                    >
-                      {item.icon && <item.icon className="text-sidebar-foreground" />}
+                  <SidebarMenuButton asChild isActive={isActive}>
+                    <Link to={item.to}>
+                      {item.icon && <item.icon />}
                       <span>{item.name}</span>
-                    </NavLink>
+                    </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
               );
