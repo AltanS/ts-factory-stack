@@ -2,49 +2,12 @@ import type { InsertUser as User } from '#drizzle/schema';
 import { useLoading } from '#app/hooks/use-loading';
 import { Link, useNavigation } from 'react-router';
 import { cn } from '#app/lib/utils';
-import { ArrowLeft, Sun, Moon } from 'lucide-react';
+import { ArrowLeft } from 'lucide-react';
 import { AppSidebar } from './app-sidebar';
 import { SidebarInset, SidebarProvider, SidebarTrigger } from './ui/sidebar';
 import { Separator } from './ui/separator';
-import { Button } from './ui/button';
+import { ThemeToggle } from './theme-toggle';
 import * as React from 'react';
-
-function ThemeToggle() {
-  const [theme, setTheme] = React.useState<'light' | 'dark'>('light');
-
-  React.useEffect(() => {
-    // Check if dark mode is set
-    const isDark = document.documentElement.classList.contains('dark');
-    setTheme(isDark ? 'dark' : 'light');
-  }, []);
-
-  const toggleTheme = () => {
-    const newTheme = theme === 'light' ? 'dark' : 'light';
-    setTheme(newTheme);
-    
-    if (newTheme === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  };
-
-  return (
-    <Button 
-      variant="ghost" 
-      size="sm" 
-      className="h-8 w-8 p-0"
-      onClick={toggleTheme}
-    >
-      {theme === 'light' ? (
-        <Sun className="h-4 w-4" />
-      ) : (
-        <Moon className="h-4 w-4" />
-      )}
-      <span className="sr-only">Toggle theme</span>
-    </Button>
-  );
-}
 
 export default function AppWrapper({
   user,
