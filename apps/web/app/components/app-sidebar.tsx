@@ -1,7 +1,8 @@
-import * as React from "react"
-import { HomeIcon, Settings, Users, type LucideIcon } from "lucide-react"
-import type { InsertUser as User } from '#drizzle/schema'
-import { NavUser } from "#app/components/nav-user"
+import * as React from 'react';
+import { HomeIcon, Settings, Users, Layers, type LucideIcon } from 'lucide-react';
+import type { InsertUser as User } from '#drizzle/schema';
+import { NavUser } from '#app/components/nav-user';
+import { cn } from '#app/lib/utils';
 import {
   Sidebar,
   SidebarContent,
@@ -13,9 +14,10 @@ import {
   SidebarMenuItem,
   SidebarMenuButton,
   SidebarGroupLabel,
-} from "#app/components/ui/sidebar"
-import { Link, useLocation } from 'react-router'
-import { userIsAdmin } from '#app/services/permissions'
+  useSidebar,
+} from '#app/components/ui/sidebar';
+import { Link, useLocation } from 'react-router';
+import { userIsAdmin } from '#app/services/permissions';
 
 type NavigationItem = {
   name: string;
@@ -31,9 +33,15 @@ const navigationItems: NavigationItem[] = [
 ];
 
 function Logo() {
+  const { state } = useSidebar();
+  const isCollapsed = state === 'collapsed';
+
   return (
-    <div className="flex items-center">
-      <span className="text-lg font-bold text-sidebar-foreground">Your App</span>
+    <div className={cn('flex items-center gap-3 transition-all duration-200 ease-in-out', isCollapsed ? 'pl-0' : 'pl-4')}>
+      <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-zinc-900 dark:bg-zinc-100">
+        <Layers className="h-5 w-5 text-zinc-100 dark:text-zinc-900" />
+      </div>
+      {!isCollapsed && <span className="text-lg font-semibold text-zinc-900 dark:text-zinc-100">AppName</span>}
     </div>
   );
 }
@@ -41,11 +49,11 @@ function Logo() {
 export function AppSidebar({ user }: { user: User } & React.ComponentProps<typeof Sidebar>) {
   const isAdmin = userIsAdmin(user);
   const location = useLocation();
-  
+
   return (
     <Sidebar collapsible="icon">
       <SidebarHeader className="h-16 border-b">
-        <div className="flex h-full items-center px-4">
+        <div className="flex h-full items-center">
           <Logo />
         </div>
       </SidebarHeader>
@@ -75,5 +83,5 @@ export function AppSidebar({ user }: { user: User } & React.ComponentProps<typeo
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
-  )
+  );
 }
