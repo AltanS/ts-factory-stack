@@ -145,19 +145,15 @@ export default function Index() {
                         {fields.email.errors && <p className="text-sm text-red-500">{fields.email.errors}</p>}
                       </div>
                       <div className="grid gap-2">
-                        <div className="flex items-center">
-                          <Label htmlFor={fields.password.id}>Password</Label>
-                          <Link to="/forgot-password" className="ml-auto text-sm underline-offset-4 hover:underline">
-                            Forgot your password?
-                          </Link>
-                        </div>
+                        <Label htmlFor={fields.password.id}>Password</Label>
                         <Input
                         {...getInputProps(fields.password, { type: 'password' })}
                         className={!fields.password.valid ? 'border-red-500' : ''}
                         />
                         {fields.password.errors && <p className="text-sm text-red-500">{fields.password.errors}</p>}
                       </div>
-                      <div className="flex items-center space-x-2">
+                      <div className="flex items-center justify-between">
+                        <div className="flex items-center space-x-2">
                         <input
                           {...getInputProps(fields.remember, { type: 'checkbox' })}
                           className="h-4 w-4 rounded border-gray-300"
@@ -165,6 +161,10 @@ export default function Index() {
                         <Label htmlFor={fields.remember.id} className="text-sm font-normal">
                           Remember me
                         </Label>
+                        </div>
+                        <Link to="/forgot-password" className="text-sm underline-offset-4 hover:underline">
+                          Forgot password?
+                        </Link>
                       </div>
                       <Button type="submit" className="w-full">
                         Login
