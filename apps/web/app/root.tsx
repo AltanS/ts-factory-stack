@@ -57,8 +57,20 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <Meta />
         <Links />
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function() {
+                const theme = localStorage.getItem('theme');
+                if (theme === 'dark' || (theme === 'system' && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+                  document.documentElement.classList.add('dark');
+                }
+              })();
+            `,
+          }}
+        />
       </head>
-      <body className="bg-zinc-50">
+      <body className="bg-zinc-50 dark:bg-zinc-900">
         {children}
         <Scripts />
       </body>
