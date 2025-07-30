@@ -3,3 +3,9 @@ node_modules
 *.pgsql
 *.log
 .env
+.DS_Store
+/node_modules/
+
+# React Router
+/.react-router/
+/build/

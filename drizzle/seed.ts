@@ -32,7 +32,7 @@ async function main() {
 
     console.log(`Database seeded successfully.`);
   } catch (error) {
-    console.error("Error checking or creating database 'delphi':", error);
+    console.error("Error checking or creating database:", error);
   } finally {
     await client.end();
   }

@@ -16,7 +16,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '#app/
 import PublicWrapper from '#app/components/public-wrapper';
 
 export const meta: MetaFunction = () => {
-  return [{ title: 'Delphi' }];
+  return [{ title: 'Login' }];
 };
 
 const schema = z.object({
