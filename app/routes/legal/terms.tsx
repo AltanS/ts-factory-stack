@@ -9,9 +9,7 @@ export const meta: MetaFunction = () => {
 export default function Terms() {
   return (
     <PublicWrapper>
-      <main className="min-h-screen py-16 px-4">
-        <div className="mx-auto max-w-3xl">
-          <article className="prose prose-zinc dark:prose-invert max-w-none">
+      <article className="prose prose-zinc dark:prose-invert max-w-none">
             <H1 variant="default" className="mb-8">Terms of Service</H1>
             
             <P variant="subtle" className="mb-8">Last updated: January 27, 2025</P>
@@ -58,9 +56,7 @@ export default function Terms() {
               <H2 variant="default">6. Contact Information</H2>
               <P>Questions about the Terms of Service should be sent to us at legal@example.com.</P>
             </section>
-          </article>
-        </div>
-      </main>
+      </article>
     </PublicWrapper>
   );
 }

@@ -11,7 +11,7 @@ export default function PublicWrapper({
   showLogo?: boolean;
 }) {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen pt-16">
       <header className="fixed top-0 left-0 right-0 p-4 z-50 flex items-center justify-between">
         <div className="pl-0">
           {showLogo && (
@@ -33,7 +33,7 @@ export default function PublicWrapper({
           <ThemeToggle />
         </div>
       </header>
-      {children}
+      <div className="container mx-auto max-w-3xl px-4 py-12 md:py-16">{children}</div>
     </div>
   );
 }

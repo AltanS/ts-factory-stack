@@ -1,4 +1,4 @@
-import type { InsertUser as User } from '#drizzle/schema';
+import type { SelectUser as User } from '#drizzle/schema';
 import { useLoading } from '#app/hooks/use-loading';
 import { Link, useNavigation } from 'react-router';
 import { cn } from '#app/lib/utils';

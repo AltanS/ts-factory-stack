@@ -11,4 +11,3 @@ This is an example article stored under `content/collections/articles`.
 - Written in Markdown
 - Parsed with frontmatter
 - Rendered to HTML on the server
-

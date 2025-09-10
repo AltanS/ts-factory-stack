@@ -1,4 +1,4 @@
-import type { InsertUser as User } from '#drizzle/schema';
+import type { SelectUser as User } from '#drizzle/schema';
 
 export function userIsAdmin(user: User | null): boolean {
   if (!user || !user.role) {

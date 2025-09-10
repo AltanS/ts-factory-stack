@@ -2,10 +2,12 @@ import type { Route } from './+types/articles.$slug';
 import { useLoaderData } from 'react-router';
 import PublicWrapper from '#app/components/public-wrapper';
 import { getEntry } from '#app/cms/loader.server';
+import { ArticleSchema, type Article } from '#app/cms/schemas';
+import type { ContentEntry } from '#app/cms/types';
 
 export async function loader({ params }: Route.LoaderArgs) {
-  const slug = params.slug as string;
-  const article = await getEntry('articles', slug);
+  const slug = String(params.slug);
+  const article = await getEntry<typeof ArticleSchema>('articles', slug);
   if (!article) {
     throw new Response('Not found', { status: 404 });
   }
@@ -19,18 +21,26 @@ export function meta({ data }: Route.MetaArgs) {
 
 export default function ArticleDetail() {
   const { article } = useLoaderData<typeof loader>();
-  const fm = article.frontmatter as any;
+  const { frontmatter } = article as ContentEntry<Article>;
+  const { title, date } = frontmatter;
+  const hasBody = Boolean(article.bodyHtml && article.bodyHtml.trim().length > 0);
+
   return (
     <PublicWrapper>
-      <article className="container mx-auto max-w-3xl py-8 prose dark:prose-invert">
-        <h1>{fm.title}</h1>
-        {fm.date ?
-          <p className="text-sm text-gray-500">{String(fm.date)}</p>
-        : null}
-        {article.bodyHtml ?
-          <div className="prose" dangerouslySetInnerHTML={{ __html: article.bodyHtml }} />
-        : <pre className="text-sm bg-gray-50 p-4 rounded">No markdown body.</pre>}
-      </article>
+      <header className="mb-6">
+        <h1 className="text-3xl font-bold tracking-tight">{title}</h1>
+        {date && (
+          <p className="mt-1 text-sm text-zinc-500 dark:text-zinc-400">{String(date)}</p>
+        )}
+      </header>
+      {hasBody ? (
+        <div
+          className="prose prose-zinc dark:prose-invert max-w-none"
+          dangerouslySetInnerHTML={{ __html: article.bodyHtml! }}
+        />
+      ) : (
+        <p className="text-sm text-zinc-500">No content.</p>
+      )}
     </PublicWrapper>
   );
 }

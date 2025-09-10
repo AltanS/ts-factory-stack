@@ -74,15 +74,13 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export function ErrorBoundary() {
   const error = useRouteError();
-  return (
-    <div className="text-red-500 text-center mt-4">
-      {isRouteErrorResponse(error) ?
-        <p>Error: {error.statusText}</p>
-      : error instanceof Error ?
-        <p>Error: {error.message}</p>
-      : <p>Unknown error occurred</p>}
-    </div>
-  );
+  let message = "Unknown error occurred";
+  if (isRouteErrorResponse(error)) {
+    message = error.statusText;
+  } else if (error instanceof Error) {
+    message = error.message;
+  }
+  return <div className="text-red-500 text-center mt-4">Error: {message}</div>;
 }
 
 export default function Index() {
@@ -97,7 +95,7 @@ export default function Index() {
 
   return (
     <PublicWrapper>
-      <main className="flex min-h-screen items-center justify-center px-4 py-12">
+      <main className="flex min-h-[60vh] items-center justify-center">
         <div className="w-full max-w-sm">
           <div className="flex flex-col gap-6">
             <Card>

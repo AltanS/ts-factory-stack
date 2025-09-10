@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { HomeIcon, Settings, Users, Layers, type LucideIcon } from 'lucide-react';
-import type { InsertUser as User } from '#drizzle/schema';
+import type { SelectUser as User } from '#drizzle/schema';
 import { NavUser } from '#app/components/nav-user';
 import { cn } from '#app/lib/utils';
 import {
